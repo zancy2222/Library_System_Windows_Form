@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.View_users = new System.Windows.Forms.Button();
             this.View_reports = new System.Windows.Forms.Button();
             this.Add_Books = new System.Windows.Forms.Button();
             this.LOGOUT = new System.Windows.Forms.Button();
@@ -47,7 +46,6 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.YellowGreen;
-            this.panel1.Controls.Add(this.View_users);
             this.panel1.Controls.Add(this.View_reports);
             this.panel1.Controls.Add(this.Add_Books);
             this.panel1.Controls.Add(this.LOGOUT);
@@ -56,18 +54,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(200, 687);
             this.panel1.TabIndex = 0;
-            // 
-            // View_users
-            // 
-            this.View_users.BackColor = System.Drawing.Color.LemonChiffon;
-            this.View_users.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.View_users.Location = new System.Drawing.Point(25, 287);
-            this.View_users.Name = "View_users";
-            this.View_users.Size = new System.Drawing.Size(156, 38);
-            this.View_users.TabIndex = 5;
-            this.View_users.Text = "VIEW ALL USERS";
-            this.View_users.UseVisualStyleBackColor = false;
-            this.View_users.Click += new System.EventHandler(this.View_users_Click);
             // 
             // View_reports
             // 
@@ -198,7 +184,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button View_users;
         private System.Windows.Forms.Button View_reports;
         private System.Windows.Forms.Button Add_Books;
         private System.Windows.Forms.Button LOGOUT;

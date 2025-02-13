@@ -21,7 +21,7 @@ namespace Library
         {
         }
 
-            private void login_Click(object sender, EventArgs e)
+        private void login_Click(object sender, EventArgs e)
         {
             string username = Username.Text;
             string password = Passfield.Text;
@@ -32,62 +32,30 @@ namespace Library
                 return;
             }
 
-            try
+            // Admin Login
+            if (username == "admin" && password == "admin")
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = "SELECT id, username FROM users WHERE username = @username AND password = @password";
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@username", username);
-                        cmd.Parameters.AddWithValue("@password", password);
-
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                int userId = reader.GetInt32("id");
-                                string loggedInUsername = reader.GetString("username");
-
-                                if (username == "admin" && password == "admin")
-                                {
-                                    // Redirect to AdminSide
-                                    AdminSide adminForm = new AdminSide();
-                                    this.Hide();
-                                    adminForm.ShowDialog();
-                                    this.Show();
-                                }
-                                else
-                                {
-                                    // Redirect to UserSide with ID and Username
-                                    UserSide userForm = new UserSide(userId, loggedInUsername);
-                                    this.Hide();
-                                    userForm.ShowDialog();
-                                    this.Show();
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
-                    }
-                }
+                AdminSide adminForm = new AdminSide();
+                this.Hide();
+                adminForm.ShowDialog();
+                this.Show();
+                return;
             }
-            catch (Exception ex)
+
+            // Librarian Login
+            if (username == "Librarian" && password == "Librarian")
             {
-                MessageBox.Show("Database error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UserSide librarianForm = new UserSide();
+                this.Hide();
+                librarianForm.ShowDialog();
+                this.Show();
+                return;
             }
+
+            // Invalid Credentials
+            MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void Signup_Click(object sender, EventArgs e)
-        {
-            Signup signupForm = new Signup();
-            this.Hide();
-            signupForm.ShowDialog();
-            this.Show();
-        }
+
     }
 }

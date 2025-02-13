@@ -18,14 +18,13 @@ namespace Library
         private int userId;
         private string username;
 
-        public UserSide(int userId, string username)
+        public UserSide()
         {
             InitializeComponent();
-            this.userId = userId;
-            this.username = username;
+           
 
             // Display the logged-in username
-            UsernameLabel.Text = username;
+            UsernameLabel.Text = "Librarian";
             LoadBooks(); // Load books on form open
 
         }
@@ -59,6 +58,30 @@ namespace Library
                 MessageBox.Show("Error loading books: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private string ShowInputDialog(string title, string prompt)
+        {
+            Form promptForm = new Form()
+            {
+                Width = 400,
+                Height = 200,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                Text = title,
+                StartPosition = FormStartPosition.CenterScreen
+            };
+
+            Label textLabel = new Label() { Left = 20, Top = 20, Text = prompt, Width = 350 };
+            TextBox inputBox = new TextBox() { Left = 20, Top = 50, Width = 350 };
+            Button confirmButton = new Button() { Text = "OK", Left = 150, Width = 100, Top = 90, DialogResult = DialogResult.OK };
+
+            confirmButton.Click += (sender, e) => { promptForm.Close(); };
+
+            promptForm.Controls.Add(textLabel);
+            promptForm.Controls.Add(inputBox);
+            promptForm.Controls.Add(confirmButton);
+            promptForm.AcceptButton = confirmButton;
+
+            return promptForm.ShowDialog() == DialogResult.OK ? inputBox.Text : string.Empty;
+        }
 
         private void Borrow_Click(object sender, EventArgs e)
         {
@@ -72,10 +95,18 @@ namespace Library
             int quantity = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["quantity"].Value);
             string status = dataGridView1.SelectedRows[0].Cells["status"].Value.ToString();
 
-            // Check if book is available
             if (quantity <= 0 || status == "Missing" || status == "Damaged" || status == "Borrowed")
             {
                 MessageBox.Show("This book is unavailable for borrowing!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Use custom InputBox function to get borrower name
+            string borrowerName = ShowInputDialog("Borrow Book", "Enter Student name:");
+
+            if (string.IsNullOrWhiteSpace(borrowerName))
+            {
+                MessageBox.Show("Borrower name is required!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -85,21 +116,19 @@ namespace Library
                 {
                     conn.Open();
 
-                    // Insert into borrowed_books
-                    string borrowQuery = "INSERT INTO borrowed_books (user_id, book_id, borrow_date) VALUES (@userId, @bookId, NOW())";
+                    string borrowQuery = "INSERT INTO borrowed_books (borrower_name, book_id, borrow_date) VALUES (@borrowerName, @bookId, NOW())";
                     using (MySqlCommand cmd = new MySqlCommand(borrowQuery, conn))
                     {
-                        cmd.Parameters.AddWithValue("@userId", userId);
+                        cmd.Parameters.AddWithValue("@borrowerName", borrowerName);
                         cmd.Parameters.AddWithValue("@bookId", bookId);
                         cmd.ExecuteNonQuery();
                     }
 
-                    // Update book quantity and status
                     string updateBookQuery = @"
-                UPDATE books 
-                SET quantity = quantity - 1, 
-                    status = CASE WHEN quantity - 1 = 0 THEN 'Borrowed' ELSE status END 
-                WHERE book_id = @bookId";
+            UPDATE books 
+            SET quantity = quantity - 1, 
+                status = CASE WHEN quantity - 1 = 0 THEN 'Borrowed' ELSE status END 
+            WHERE book_id = @bookId";
 
                     using (MySqlCommand cmd = new MySqlCommand(updateBookQuery, conn))
                     {
@@ -118,6 +147,7 @@ namespace Library
         }
 
 
+
         private void RETURN_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 0)
@@ -128,38 +158,44 @@ namespace Library
 
             int bookId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["book_id"].Value);
 
+            // Use custom InputBox function to get borrower name
+            string borrowerName = ShowInputDialog("Return Book", "Enter Student name:");
+
+            if (string.IsNullOrWhiteSpace(borrowerName))
+            {
+                MessageBox.Show("Borrower name is required!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
 
-                    // Check if user has borrowed this book
-                    string checkQuery = "SELECT COUNT(*) FROM borrowed_books WHERE book_id = @bookId AND user_id = @userId AND return_date IS NULL";
+                    string checkQuery = "SELECT COUNT(*) FROM borrowed_books WHERE book_id = @bookId AND borrower_name = @borrowerName AND return_date IS NULL";
                     using (MySqlCommand cmd = new MySqlCommand(checkQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@bookId", bookId);
-                        cmd.Parameters.AddWithValue("@userId", userId);
+                        cmd.Parameters.AddWithValue("@borrowerName", borrowerName);
 
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
 
                         if (count == 0)
                         {
-                            MessageBox.Show("You haven't borrowed this book!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("No matching borrowed book found for this name!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
                     }
 
-                    // Mark as returned
-                    string returnQuery = "UPDATE borrowed_books SET return_date = NOW(), status = 'Returned' WHERE book_id = @bookId AND user_id = @userId AND return_date IS NULL";
+                    string returnQuery = "UPDATE borrowed_books SET return_date = NOW(), status = 'Returned' WHERE book_id = @bookId AND borrower_name = @borrowerName AND return_date IS NULL";
                     using (MySqlCommand cmd = new MySqlCommand(returnQuery, conn))
                     {
                         cmd.Parameters.AddWithValue("@bookId", bookId);
-                        cmd.Parameters.AddWithValue("@userId", userId);
+                        cmd.Parameters.AddWithValue("@borrowerName", borrowerName);
                         cmd.ExecuteNonQuery();
                     }
 
-                    // Update book quantity and status
                     string updateBookQuery = "UPDATE books SET quantity = quantity + 1, status = 'Available' WHERE book_id = @bookId";
                     using (MySqlCommand cmd = new MySqlCommand(updateBookQuery, conn))
                     {
@@ -176,6 +212,7 @@ namespace Library
                 MessageBox.Show("Database error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
 
         // Function to Mark Overdue Books as "Not Returning"

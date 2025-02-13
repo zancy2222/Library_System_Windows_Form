@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.login = new System.Windows.Forms.Button();
-            this.Signup = new System.Windows.Forms.Button();
             this.Username = new System.Windows.Forms.TextBox();
             this.Passfield = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -52,23 +51,11 @@
             this.login.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.login.Location = new System.Drawing.Point(26, 494);
             this.login.Name = "login";
-            this.login.Size = new System.Drawing.Size(123, 32);
+            this.login.Size = new System.Drawing.Size(305, 32);
             this.login.TabIndex = 3;
             this.login.Text = "LOGIN";
             this.login.UseVisualStyleBackColor = false;
             this.login.Click += new System.EventHandler(this.login_Click);
-            // 
-            // Signup
-            // 
-            this.Signup.BackColor = System.Drawing.Color.LightGreen;
-            this.Signup.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Signup.Location = new System.Drawing.Point(208, 494);
-            this.Signup.Name = "Signup";
-            this.Signup.Size = new System.Drawing.Size(123, 32);
-            this.Signup.TabIndex = 4;
-            this.Signup.Text = "SIGN UP";
-            this.Signup.UseVisualStyleBackColor = false;
-            this.Signup.Click += new System.EventHandler(this.Signup_Click);
             // 
             // Username
             // 
@@ -97,7 +84,6 @@
             this.ClientSize = new System.Drawing.Size(370, 582);
             this.Controls.Add(this.Passfield);
             this.Controls.Add(this.Username);
-            this.Controls.Add(this.Signup);
             this.Controls.Add(this.login);
             this.Controls.Add(this.pictureBox1);
             this.Name = "LoginForm";
@@ -111,7 +97,6 @@
         #endregion
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button login;
-        private System.Windows.Forms.Button Signup;
         private System.Windows.Forms.TextBox Username;
         private System.Windows.Forms.TextBox Passfield;
     }

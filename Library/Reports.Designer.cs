@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.View_users = new System.Windows.Forms.Button();
             this.View_reports = new System.Windows.Forms.Button();
             this.Add_Books = new System.Windows.Forms.Button();
             this.LOGOUT = new System.Windows.Forms.Button();
@@ -50,18 +49,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(523, 447);
             this.dataGridView1.TabIndex = 11;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // View_users
-            // 
-            this.View_users.BackColor = System.Drawing.Color.LemonChiffon;
-            this.View_users.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.View_users.Location = new System.Drawing.Point(25, 297);
-            this.View_users.Name = "View_users";
-            this.View_users.Size = new System.Drawing.Size(156, 38);
-            this.View_users.TabIndex = 5;
-            this.View_users.Text = "VIEW ALL USERS";
-            this.View_users.UseVisualStyleBackColor = false;
-            this.View_users.Click += new System.EventHandler(this.View_users_Click);
             // 
             // View_reports
             // 
@@ -141,7 +128,6 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.YellowGreen;
-            this.panel1.Controls.Add(this.View_users);
             this.panel1.Controls.Add(this.View_reports);
             this.panel1.Controls.Add(this.Add_Books);
             this.panel1.Controls.Add(this.LOGOUT);
@@ -174,7 +160,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button View_users;
         private System.Windows.Forms.Button View_reports;
         private System.Windows.Forms.Button Add_Books;
         private System.Windows.Forms.Button LOGOUT;

@@ -30,14 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserSide));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.UsernameLabel = new System.Windows.Forms.Label();
+            this.WelcomeText = new System.Windows.Forms.Label();
+            this.LOG_OUT = new System.Windows.Forms.Button();
+            this.RETURN = new System.Windows.Forms.Button();
+            this.Borrow = new System.Windows.Forms.Button();
             this.search = new System.Windows.Forms.Button();
             this.searchfield = new System.Windows.Forms.TextBox();
-            this.Borrow = new System.Windows.Forms.Button();
-            this.RETURN = new System.Windows.Forms.Button();
-            this.LOG_OUT = new System.Windows.Forms.Button();
-            this.WelcomeText = new System.Windows.Forms.Label();
-            this.UsernameLabel = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -57,14 +57,56 @@
             this.panel1.Size = new System.Drawing.Size(814, 477);
             this.panel1.TabIndex = 0;
             // 
-            // dataGridView1
+            // UsernameLabel
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(181, 105);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(620, 354);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.UsernameLabel.AutoSize = true;
+            this.UsernameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UsernameLabel.Location = new System.Drawing.Point(221, 14);
+            this.UsernameLabel.Name = "UsernameLabel";
+            this.UsernameLabel.Size = new System.Drawing.Size(0, 20);
+            this.UsernameLabel.TabIndex = 13;
+            this.UsernameLabel.Click += new System.EventHandler(this.UsernameLabel_Click);
+            // 
+            // WelcomeText
+            // 
+            this.WelcomeText.AutoSize = true;
+            this.WelcomeText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WelcomeText.Location = new System.Drawing.Point(12, 14);
+            this.WelcomeText.Name = "WelcomeText";
+            this.WelcomeText.Size = new System.Drawing.Size(203, 20);
+            this.WelcomeText.TabIndex = 12;
+            this.WelcomeText.Text = "WELCOME TO SYSTEM";
+            this.WelcomeText.Click += new System.EventHandler(this.WelcomeText_Click);
+            // 
+            // LOG_OUT
+            // 
+            this.LOG_OUT.Location = new System.Drawing.Point(15, 420);
+            this.LOG_OUT.Name = "LOG_OUT";
+            this.LOG_OUT.Size = new System.Drawing.Size(160, 39);
+            this.LOG_OUT.TabIndex = 11;
+            this.LOG_OUT.Text = "LOG OUT";
+            this.LOG_OUT.UseVisualStyleBackColor = true;
+            this.LOG_OUT.Click += new System.EventHandler(this.LOG_OUT_Click);
+            // 
+            // RETURN
+            // 
+            this.RETURN.Location = new System.Drawing.Point(15, 184);
+            this.RETURN.Name = "RETURN";
+            this.RETURN.Size = new System.Drawing.Size(160, 39);
+            this.RETURN.TabIndex = 10;
+            this.RETURN.Text = "RETURN";
+            this.RETURN.UseVisualStyleBackColor = true;
+            this.RETURN.Click += new System.EventHandler(this.RETURN_Click);
+            // 
+            // Borrow
+            // 
+            this.Borrow.Location = new System.Drawing.Point(15, 105);
+            this.Borrow.Name = "Borrow";
+            this.Borrow.Size = new System.Drawing.Size(160, 39);
+            this.Borrow.TabIndex = 9;
+            this.Borrow.Text = " BORROW";
+            this.Borrow.UseVisualStyleBackColor = true;
+            this.Borrow.Click += new System.EventHandler(this.Borrow_Click);
             // 
             // search
             // 
@@ -84,56 +126,14 @@
             this.searchfield.TabIndex = 7;
             this.searchfield.TextChanged += new System.EventHandler(this.searchfield_TextChanged);
             // 
-            // Borrow
+            // dataGridView1
             // 
-            this.Borrow.Location = new System.Drawing.Point(15, 105);
-            this.Borrow.Name = "Borrow";
-            this.Borrow.Size = new System.Drawing.Size(160, 39);
-            this.Borrow.TabIndex = 9;
-            this.Borrow.Text = "BORROW";
-            this.Borrow.UseVisualStyleBackColor = true;
-            this.Borrow.Click += new System.EventHandler(this.Borrow_Click);
-            // 
-            // RETURN
-            // 
-            this.RETURN.Location = new System.Drawing.Point(15, 184);
-            this.RETURN.Name = "RETURN";
-            this.RETURN.Size = new System.Drawing.Size(160, 39);
-            this.RETURN.TabIndex = 10;
-            this.RETURN.Text = "RETURN";
-            this.RETURN.UseVisualStyleBackColor = true;
-            this.RETURN.Click += new System.EventHandler(this.RETURN_Click);
-            // 
-            // LOG_OUT
-            // 
-            this.LOG_OUT.Location = new System.Drawing.Point(15, 420);
-            this.LOG_OUT.Name = "LOG_OUT";
-            this.LOG_OUT.Size = new System.Drawing.Size(160, 39);
-            this.LOG_OUT.TabIndex = 11;
-            this.LOG_OUT.Text = "LOG OUT";
-            this.LOG_OUT.UseVisualStyleBackColor = true;
-            this.LOG_OUT.Click += new System.EventHandler(this.LOG_OUT_Click);
-            // 
-            // WelcomeText
-            // 
-            this.WelcomeText.AutoSize = true;
-            this.WelcomeText.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.WelcomeText.Location = new System.Drawing.Point(12, 14);
-            this.WelcomeText.Name = "WelcomeText";
-            this.WelcomeText.Size = new System.Drawing.Size(203, 20);
-            this.WelcomeText.TabIndex = 12;
-            this.WelcomeText.Text = "WELCOME TO SYSTEM";
-            this.WelcomeText.Click += new System.EventHandler(this.WelcomeText_Click);
-            // 
-            // UsernameLabel
-            // 
-            this.UsernameLabel.AutoSize = true;
-            this.UsernameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UsernameLabel.Location = new System.Drawing.Point(221, 14);
-            this.UsernameLabel.Name = "UsernameLabel";
-            this.UsernameLabel.Size = new System.Drawing.Size(0, 20);
-            this.UsernameLabel.TabIndex = 13;
-            this.UsernameLabel.Click += new System.EventHandler(this.UsernameLabel_Click);
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(181, 105);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(620, 354);
+            this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // UserSide
             // 

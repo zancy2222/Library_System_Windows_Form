@@ -40,14 +40,6 @@ namespace Library
             this.Show();
         }
 
-        private void View_users_Click(object sender, EventArgs e)
-        {
-            // Navigate to ViewUsers.cs
-            ViewUsers usersForm = new ViewUsers();
-            this.Hide();
-            usersForm.ShowDialog();
-            this.Show();
-        }
 
         private void LOGOUT_Click(object sender, EventArgs e)
         {
@@ -83,74 +75,11 @@ namespace Library
         // Insert Book
         private void Insert_Click(object sender, EventArgs e)
         {
-            string bookName = Prompt.ShowDialog("Enter Book Name:", "Insert Book");
-            string author = Prompt.ShowDialog("Enter Author:", "Insert Book");
-            string category = Prompt.ShowDialog("Enter Category:", "Insert Book");
-            string quantityInput = Prompt.ShowDialog("Enter Quantity (Number of Copies):", "Insert Book");
-
-            if (string.IsNullOrWhiteSpace(bookName) || string.IsNullOrWhiteSpace(author) ||
-                string.IsNullOrWhiteSpace(category) || string.IsNullOrWhiteSpace(quantityInput))
-            {
-                MessageBox.Show("All fields are required!", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (!int.TryParse(quantityInput, out int quantity) || quantity <= 0)
-            {
-                MessageBox.Show("Invalid quantity! Please enter a positive number.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            using (Form prompt = new Form())
-            {
-                prompt.Width = 400;
-                prompt.Height = 250;
-                prompt.Text = "Select Date and Status";
-
-                DateTimePicker datePicker = new DateTimePicker() { Left = 50, Top = 20, Width = 300, Format = DateTimePickerFormat.Short };
-                ComboBox statusDropdown = new ComboBox() { Left = 50, Top = 60, Width = 300 };
-                statusDropdown.Items.AddRange(new string[] { "Borrowed", "Available", "Damaged", "Missing" });
-                statusDropdown.SelectedIndex = 1; // Default: Available
-
-                Button confirmButton = new Button() { Text = "OK", Left = 150, Width = 100, Top = 100 };
-                confirmButton.Click += (s, ev) => { prompt.Close(); };
-
-                prompt.Controls.Add(datePicker);
-                prompt.Controls.Add(statusDropdown);
-                prompt.Controls.Add(confirmButton);
-                prompt.ShowDialog();
-
-                string datePublished = datePicker.Value.ToString("yyyy-MM-dd");
-                string status = statusDropdown.SelectedItem.ToString();
-
-                try
-                {
-                    using (MySqlConnection conn = new MySqlConnection(connectionString))
-                    {
-                        conn.Open();
-                        string query = "INSERT INTO books (book_name, author, date_published, category, status, quantity) VALUES (@bookName, @author, @datePublished, @category, @status, @quantity)";
-
-                        using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                        {
-                            cmd.Parameters.AddWithValue("@bookName", bookName);
-                            cmd.Parameters.AddWithValue("@author", author);
-                            cmd.Parameters.AddWithValue("@datePublished", datePublished);
-                            cmd.Parameters.AddWithValue("@category", category);
-                            cmd.Parameters.AddWithValue("@status", status);
-                            cmd.Parameters.AddWithValue("@quantity", quantity);
-
-                            cmd.ExecuteNonQuery();
-                            MessageBox.Show("Book inserted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            LoadBooks();
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Database error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+            BookEntryForm bookEntryForm = new BookEntryForm();
+            bookEntryForm.ShowDialog();
+            LoadBooks(); // Refresh book list after inserting
         }
+
 
 
         // Update Selected Book

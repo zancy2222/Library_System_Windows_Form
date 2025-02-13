@@ -41,15 +41,6 @@ namespace Library
             this.Show();
         }
 
-        private void View_users_Click(object sender, EventArgs e)
-        {
-            // Navigate to ViewUsers.cs
-            ViewUsers usersForm = new ViewUsers();
-            this.Hide();
-            usersForm.ShowDialog();
-            this.Show();
-        }
-
         private void LOGOUT_Click(object sender, EventArgs e)
         {
             LoginForm loginform = new LoginForm();
@@ -65,16 +56,15 @@ namespace Library
                 {
                     conn.Open();
                     string query = @"
-                SELECT 
-                    u.fullname AS 'Full Name', 
-                    b.book_name AS 'Book Title', 
-                    bb.status AS 'Status', 
-                    bb.borrow_date AS 'Borrowed Date', 
-                    bb.return_date AS 'Return Date'
-                FROM borrowed_books bb
-                JOIN users u ON bb.user_id = u.id
-                JOIN books b ON bb.book_id = b.book_id
-                ORDER BY bb.borrow_date DESC";
+            SELECT 
+                bb.borrower_name AS 'Borrower Name', 
+                b.book_name AS 'Book Title', 
+                bb.status AS 'Status', 
+                bb.borrow_date AS 'Borrowed Date', 
+                bb.return_date AS 'Return Date'
+            FROM borrowed_books bb
+            JOIN books b ON bb.book_id = b.book_id
+            ORDER BY bb.borrow_date DESC";
 
                     using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn))
                     {
@@ -89,6 +79,7 @@ namespace Library
                 MessageBox.Show("Error loading reports: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void searchfield_TextChanged(object sender, EventArgs e)
         {
@@ -108,20 +99,19 @@ namespace Library
                 {
                     conn.Open();
                     string query = @"
-                SELECT 
-                    u.fullname AS 'Full Name', 
-                    b.book_name AS 'Book Title', 
-                    bb.status AS 'Status', 
-                    bb.borrow_date AS 'Borrowed Date', 
-                    bb.return_date AS 'Return Date'
-                FROM borrowed_books bb
-                JOIN users u ON bb.user_id = u.id
-                JOIN books b ON bb.book_id = b.book_id
-                WHERE 
-                    u.fullname LIKE @keyword OR 
-                    b.book_name LIKE @keyword OR 
-                    bb.status LIKE @keyword
-                ORDER BY bb.borrow_date DESC";
+            SELECT 
+                bb.borrower_name AS 'Borrower Name', 
+                b.book_name AS 'Book Title', 
+                bb.status AS 'Status', 
+                bb.borrow_date AS 'Borrowed Date', 
+                bb.return_date AS 'Return Date'
+            FROM borrowed_books bb
+            JOIN books b ON bb.book_id = b.book_id
+            WHERE 
+                bb.borrower_name LIKE @keyword OR 
+                b.book_name LIKE @keyword OR 
+                bb.status LIKE @keyword
+            ORDER BY bb.borrow_date DESC";
 
                     using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, conn))
                     {
@@ -137,6 +127,7 @@ namespace Library
                 MessageBox.Show("Error searching reports: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

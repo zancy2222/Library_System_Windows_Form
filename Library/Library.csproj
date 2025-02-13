@@ -104,6 +104,12 @@
     <Compile Include="AdminSide.Designer.cs">
       <DependentUpon>AdminSide.cs</DependentUpon>
     </Compile>
+    <Compile Include="BookEntryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BookEntryForm.Designer.cs">
+      <DependentUpon>BookEntryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,14 +136,11 @@
     <Compile Include="UserSide.Designer.cs">
       <DependentUpon>UserSide.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewUsers.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ViewUsers.Designer.cs">
-      <DependentUpon>ViewUsers.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="AdminSide.resx">
       <DependentUpon>AdminSide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BookEntryForm.resx">
+      <DependentUpon>BookEntryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
@@ -159,9 +162,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserSide.resx">
       <DependentUpon>UserSide.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ViewUsers.resx">
-      <DependentUpon>ViewUsers.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
